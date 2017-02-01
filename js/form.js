@@ -12,9 +12,9 @@ var apartType = document.querySelector('#type');
 var roomNumber = document.querySelector('#room_number');
 var capacity = document.querySelector('#capacity');
 
+formTitle.minLength = 30;
+formTitle.maxLength = 100;
 formTitle.required = true;
-formTitle.max = 100;
-formTitle.min = 30;
 formPrice.required = true;
 formPrice.max = 1000000;
 formPrice.min = 1000;
@@ -28,10 +28,10 @@ depart.addEventListener('click', function () {
 });
 
 formPrice.addEventListener('change', function () {
-  apartType.value = formPrice.value;
+  apartType.value = formPrice.min;
 });
 apartType.addEventListener('change', function () {
-  formPrice.value = apartType.value;
+  formPrice.min = apartType.value;
 });
 
 roomNumber.addEventListener('change', function () {
