@@ -4,6 +4,7 @@ var formTitle = document.querySelector('#title');
 var formPrice = document.querySelector('#price');
 var formAdress = document.querySelector('#address');
 var dialogOpenPins = document.querySelectorAll('.pin');
+var containerPins = document.querySelector('.tokyo__pin-map');
 var dialog = document.querySelector('.dialog');
 var dialogCloseButton = dialog.querySelector('.dialog__close');
 var arrive = document.querySelector('#time');
@@ -11,6 +12,8 @@ var depart = document.querySelector('#timeout');
 var apartType = document.querySelector('#type');
 var roomNumber = document.querySelector('#room_number');
 var capacity = document.querySelector('#capacity');
+var ENTER_KEY_CODE = 13;
+var ESCAPE_KEY_CODE = 27;
 
 formTitle.minLength = 30;
 formTitle.maxLength = 100;
@@ -41,29 +44,60 @@ capacity.addEventListener('change', function () {
   roomNumber.value = capacity.value;
 });
 
-for (var i = 0; i < dialogOpenPins.length; i++) {
-  clickControl(dialogOpenPins[i]);
-}
+var isEnter = function (evt) {
+  return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
+};
 
-function openDialog(dialogPin) {
-  for (i = 0; i < dialogOpenPins.length; i++) {
+var onDialogKeydown = function (evt) {
+  if (evt.keyCode === ESCAPE_KEY_CODE) {
+    dialog.classList.add('invisible');
+  }
+};
+
+function openDialog(target) {
+  for (var i = 0; i < dialogOpenPins.length; i++) {
     dialogOpenPins[i].classList.remove('pin--active');
   }
-  dialogPin.classList.add('pin--active');
+  target.classList.add('pin--active');
   dialog.classList.remove('invisible');
+  document.addEventListener('keydown', onDialogKeydown);
+  target.setAttribute('aria-pressed', 'true');
+  dialog.setAttribute('aria-hidden', 'false');
 }
 
 function closeDialog() {
-  for (i = 0; i < dialogOpenPins.length; i++) {
+  for (var i = 0; i < dialogOpenPins.length; i++) {
     dialogOpenPins[i].classList.remove('pin--active');
+    dialogOpenPins[i].setAttribute('aria-pressed', 'false');
   }
   dialog.classList.add('invisible');
+  document.removeEventListener('keydown', onDialogKeydown);
+  dialog.setAttribute('aria-hidden', 'true');
 }
 
 dialogCloseButton.addEventListener('click', closeDialog);
 
-function clickControl(dialogPin) {
-  dialogPin.addEventListener('click', function () {
-    openDialog(dialogPin);
-  });
-}
+dialogCloseButton.addEventListener('keydown', function (evt) {
+  if (isEnter(evt)) {
+    closeDialog();
+  }
+});
+
+containerPins.onclick = function (evt) {
+  var target = evt.target;
+  while (target !== containerPins) {
+    if (target.classList.contains('pin')) {
+      openDialog(target);
+      return;
+    }
+    target = target.parentNode;
+  }
+};
+
+containerPins.onkeydown = function (evt) {
+  if (isEnter(evt)) {
+    if (evt.target.classList.contains('pin')) {
+      openDialog(evt.target);
+    }
+  }
+};
