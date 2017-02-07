@@ -83,7 +83,7 @@ dialogCloseButton.addEventListener('keydown', function (evt) {
   }
 });
 
-containerPins.onclick = function (evt) {
+containerPins.addEventListener('click', function (evt) {
   var target = evt.target;
   while (target !== containerPins) {
     if (target.classList.contains('pin')) {
@@ -92,12 +92,12 @@ containerPins.onclick = function (evt) {
     }
     target = target.parentNode;
   }
-};
+});
 
-containerPins.onkeydown = function (evt) {
+containerPins.addEventListener('keydown', function (evt) {
   if (isEnter(evt)) {
     if (evt.target.classList.contains('pin')) {
       openDialog(evt.target);
     }
   }
-};
+});
