@@ -7,20 +7,20 @@ window.isEnter = function (evt) {
   return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
 };
 
-window.initializePins = function (popup, popupCloseButton, container, items, cssInvisible, cssItemActive, cssItem) {
+window.initializePins = function (popup, popupCloseButton, container, items) {
 
   var onPopupKeydown = function (evt) {
     if (evt.keyCode === ESCAPE_KEY_CODE) {
-      popup.classList.add(cssInvisible);
+      popup.classList.add('invisible');
     }
   };
 
   function openPopup(target) {
     for (var i = 0; i < items.length; i++) {
-      items[i].classList.remove(cssItemActive);
+      items[i].classList.remove('pin--active');
     }
-    target.classList.add(cssItemActive);
-    popup.classList.remove(cssInvisible);
+    target.classList.add('pin--active');
+    popup.classList.remove('invisible');
     document.addEventListener('keydown', onPopupKeydown);
     target.setAttribute('aria-pressed', 'true');
     popup.setAttribute('aria-hidden', 'false');
@@ -28,10 +28,10 @@ window.initializePins = function (popup, popupCloseButton, container, items, css
 
   function closePopup() {
     for (var i = 0; i < items.length; i++) {
-      items[i].classList.remove(cssItemActive);
+      items[i].classList.remove('pin--active');
       items[i].setAttribute('aria-pressed', 'false');
     }
-    popup.classList.add(cssInvisible);
+    popup.classList.add('invisible');
     document.removeEventListener('keydown', onPopupKeydown);
     popup.setAttribute('aria-hidden', 'true');
   }
@@ -47,7 +47,7 @@ window.initializePins = function (popup, popupCloseButton, container, items, css
   container.addEventListener('click', function (evt) {
     var target = evt.target;
     while (target !== container) {
-      if (target.classList.contains(cssItem)) {
+      if (target.classList.contains('pin')) {
         openPopup(target);
         return;
       }
@@ -57,7 +57,7 @@ window.initializePins = function (popup, popupCloseButton, container, items, css
 
   container.addEventListener('keydown', function (evt) {
     if (window.isEnter(evt)) {
-      if (evt.target.classList.contains(cssItem)) {
+      if (evt.target.classList.contains('pin')) {
         openPopup(evt.target);
       }
     }

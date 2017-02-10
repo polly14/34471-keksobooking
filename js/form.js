@@ -14,14 +14,14 @@ var apartType = document.querySelector('#type');
 var roomNumber = document.querySelector('#room_number');
 var capacity = document.querySelector('#capacity');
 
-var arriveValues = ['12', '13', '14'];
-var departValues = ['12', '13', '14'];
+var arriveValues = ['После 12', 'После 13', 'После 14'];
+var departValues = ['Выезд до 12', 'Выезд до 13', 'Выезд до 14'];
 var priceArray = ['0', '1000', '10000'];
-var typeArray = ['0', '1000', '10000'];
-var roomNumberArray = ['1', '3', '3'];
-var capacityArray = ['1', '3', '3'];
+var typeArray = ['Лачуга', 'Квартира', 'Дворец'];
+var roomNumberArray = ['1 комната', '2 комнаты', '100 комнат'];
+var capacityArray = ['не для гостей', 'для 3 гостей', 'для 3 гостей'];
 
-window.initializePins(dialog, dialogCloseButton, containerPins, dialogOpenPins, 'invisible', 'pin--active', 'pin');
+window.initializePins(dialog, dialogCloseButton, containerPins, dialogOpenPins);
 
 formTitle.minLength = 30;
 formTitle.maxLength = 100;

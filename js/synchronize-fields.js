@@ -8,4 +8,5 @@ window.synchronizeFields = function (firstSelect, secondSelect, firstArray, seco
   firstSelect.addEventListener('change', function () {
     secondSelect[selectProperty] = secondArray[firstArray.indexOf(firstSelect.value)];
   });
+  
 };
