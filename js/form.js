@@ -1,17 +1,11 @@
 'use strict';
 
-window.pinsAndDialog = (function () {
+(function () {
 
   var dialog = document.querySelector('.dialog');
   var dialogCloseButton = dialog.querySelector('.dialog__close');
   var containerPins = document.querySelector('.tokyo__pin-map');
   var dialogOpenPins = document.querySelectorAll('.pin');
-
-  window.utils.initializePins(dialog, dialogCloseButton, containerPins, dialogOpenPins);
-
-})();
-
-window.formFields = (function () {
 
   var formTitle = document.querySelector('#title');
   var formPrice = document.querySelector('#price');
@@ -36,6 +30,8 @@ window.formFields = (function () {
   formPrice.max = 1000000;
   formPrice.min = 1000;
   formAdress.required = true;
+
+  window.utils.initializePins(dialog, dialogCloseButton, containerPins, dialogOpenPins);
 
   window.synchronizeFields(arrive, depart, arriveValues, departValues, 'value');
 
