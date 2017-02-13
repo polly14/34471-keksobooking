@@ -21,7 +21,7 @@ var typeArray = ['Лачуга', 'Квартира', 'Дворец'];
 var roomNumberArray = ['1 комната', '2 комнаты', '100 комнат'];
 var capacityArray = ['не для гостей', 'для 3 гостей', 'для 3 гостей'];
 
-window.initializePins(dialog, dialogCloseButton, containerPins, dialogOpenPins);
+window.utils.initializePins(dialog, dialogCloseButton, containerPins, dialogOpenPins);
 
 formTitle.minLength = 30;
 formTitle.maxLength = 100;
