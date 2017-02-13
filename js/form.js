@@ -1,17 +1,17 @@
 'use strict';
 
-var pinsAndDialog = (function () {
-  
+window.pinsAndDialog = (function () {
+
   var dialog = document.querySelector('.dialog');
   var dialogCloseButton = dialog.querySelector('.dialog__close');
   var containerPins = document.querySelector('.tokyo__pin-map');
   var dialogOpenPins = document.querySelectorAll('.pin');
-  
+
   window.utils.initializePins(dialog, dialogCloseButton, containerPins, dialogOpenPins);
-  
+
 })();
 
-var formFields = (function () {
+window.formFields = (function () {
 
   var formTitle = document.querySelector('#title');
   var formPrice = document.querySelector('#price');
