@@ -43,12 +43,12 @@ window.initializePins = function (popup, popupCloseButton, container, items, cal
     }
 
   };
-  
+
   var onClick = function () {
     closePopup();
   };
-  
-  var onKeyDown = function () {
+
+  var onKeyDown = function (evt) {
     if (window.utils.isEnter(evt)) {
       closePopup();
     }

@@ -18,4 +18,3 @@ window.synchronize = function (firstSelect, secondSelect, firstArray, secondArra
   });
 
 };
-
