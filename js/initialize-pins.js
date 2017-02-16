@@ -35,14 +35,26 @@ window.initializePins = function (popup, popupCloseButton, container, items, cal
     popup.classList.add('invisible');
     document.removeEventListener('keydown', onPopupKeydown);
     popup.setAttribute('aria-hidden', 'true');
+    popupCloseButton.removeEventListener('click', onClick);
+    popupCloseButton.removeEventListener('keydown', onKeyDown);
 
     if (typeof callback === 'function') {
       callback();
     }
 
   };
+  
+  var onClick = function () {
+    closePopup();
+  };
+  
+  var onKeyDown = function () {
+    if (window.utils.isEnter(evt)) {
+      closePopup();
+    }
+  };
 
-  popupCloseButton.addEventListener('click', closePopup);
+  popupCloseButton.addEventListener('click', onClick);
 
   popupCloseButton.addEventListener('keydown', function (evt) {
     if (window.utils.isEnter(evt)) {
