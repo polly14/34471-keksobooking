@@ -27,6 +27,7 @@ window.showCard = function (popup, container, items) {
     while (target !== container) {
       if (target.classList.contains('pin')) {
         openPopup(target);
+        window.initializePins(popup, window.dialogCloseButton, container, items);
         return;
       }
       target = target.parentNode;
@@ -37,14 +38,11 @@ window.showCard = function (popup, container, items) {
     if (window.utils.isEnter(evt)) {
       if (evt.target.classList.contains('pin')) {
         openPopup(evt.target);
-        window.initializePins(popup, window.dialogCloseButton, container, items, window.callbackFocus);
+        window.initializePins(popup, window.dialogCloseButton, container, items, function () {
+          evt.target.focus();
+        });
       }
     }
   });
 
 };
-
-window.callbackFocus = function (target) {
-  target.focus();
-};
-
