@@ -27,8 +27,6 @@ window.initializePins = function (popup, popupCloseButton, container, items, cal
     }
   };
 
-  window.showCard(popup, container, items);
-
   var closePopup = function () {
     for (var i = 0; i < items.length; i++) {
       items[i].classList.remove('pin--active');

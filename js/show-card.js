@@ -22,23 +22,23 @@ window.showCard = function (popup, container, items) {
     popup.setAttribute('aria-hidden', 'false');
   };
 
-  container.addEventListener('click', function (evt) {
+  window.containerPins.addEventListener('click', function (evt) {
     var target = evt.target;
-    while (target !== container) {
+    while (target !== window.containerPins) {
       if (target.classList.contains('pin')) {
         openPopup(target);
-        window.initializePins(popup, window.dialogCloseButton, container, items);
+        window.initializePins(window.dialog, window.dialogCloseButton, window.containerPins, window.dialogOpenPins);
         return;
       }
       target = target.parentNode;
     }
   });
 
-  container.addEventListener('keydown', function (evt) {
+  window.containerPins.addEventListener('keydown', function (evt) {
     if (window.utils.isEnter(evt)) {
       if (evt.target.classList.contains('pin')) {
         openPopup(evt.target);
-        window.initializePins(popup, window.dialogCloseButton, container, items, function () {
+        window.initializePins(window.dialog, window.dialogCloseButton, window.containerPins, window.dialogOpenPins, function () {
           evt.target.focus();
         });
       }

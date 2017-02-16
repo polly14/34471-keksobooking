@@ -1,9 +1,9 @@
 'use strict';
 
-var dialog = document.querySelector('.dialog');
-var dialogCloseButton = dialog.querySelector('.dialog__close');
-var containerPins = document.querySelector('.tokyo__pin-map');
-var dialogOpenPins = document.querySelectorAll('.pin');
+window.dialog = document.querySelector('.dialog');
+window.dialogCloseButton = window.dialog.querySelector('.dialog__close');
+window.containerPins = document.querySelector('.tokyo__pin-map');
+window.dialogOpenPins = document.querySelectorAll('.pin');
 
 var formTitle = document.querySelector('#title');
 var formPrice = document.querySelector('#price');
@@ -29,7 +29,7 @@ formPrice.max = 1000000;
 formPrice.min = 1000;
 formAdress.required = true;
 
-window.initializePins(dialog, dialogCloseButton, containerPins, dialogOpenPins);
+window.showCard(window.dialog, window.containerPins, window.dialogOpenPins);
 
 window.synchronizeFields(arrive, depart, arriveValues, departValues, 'value', window.synchronize);
 
