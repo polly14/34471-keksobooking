@@ -1,10 +1,5 @@
 'use strict';
 
-var dialog = document.querySelector('.dialog');
-var dialogCloseButton = dialog.querySelector('.dialog__close');
-var containerPins = document.querySelector('.tokyo__pin-map');
-var dialogOpenPins = document.querySelectorAll('.pin');
-
 var formTitle = document.querySelector('#title');
 var formPrice = document.querySelector('#price');
 var formAdress = document.querySelector('#address');
@@ -21,8 +16,6 @@ var typeArray = ['Лачуга', 'Квартира', 'Дворец'];
 var roomNumberArray = ['1 комната', '2 комнаты', '100 комнат'];
 var capacityArray = ['не для гостей', 'для 3 гостей', 'для 3 гостей'];
 
-window.utils.initializePins(dialog, dialogCloseButton, containerPins, dialogOpenPins);
-
 formTitle.minLength = 30;
 formTitle.maxLength = 100;
 formTitle.required = true;
@@ -31,9 +24,19 @@ formPrice.max = 1000000;
 formPrice.min = 1000;
 formAdress.required = true;
 
-window.synchronizeFields(arrive, depart, arriveValues, departValues, 'value');
+var syncValues = function (element, value) {
+  element.value = value;
+};
+var syncValueWithMin = function (element, value) {
+  element.min = value;
+};
 
-window.synchronizeFields(apartType, formPrice, typeArray, priceArray, 'min');
+window.synchronizeFields(arrive, depart, arriveValues, departValues, syncValues);
+window.synchronizeFields(depart, arrive, departValues, arriveValues, syncValues);
 
-window.synchronizeFields(roomNumber, capacity, roomNumberArray, capacityArray, 'value');
+window.synchronizeFields(roomNumber, capacity, roomNumberArray, capacityArray, syncValues);
+window.synchronizeFields(capacity, roomNumber, capacityArray, roomNumberArray, syncValues);
 
+window.synchronizeFields(apartType, formPrice, typeArray, priceArray, syncValueWithMin);
+
+window.initializePins();
