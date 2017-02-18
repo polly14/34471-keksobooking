@@ -17,49 +17,43 @@ window.utils = (function () {
   };
 })();
 
-window.initializePins = function (popup, popupCloseButton, container, items, callback) {
-  var onPopupKeydown = function (evt) {
-    if (window.utils.isEscape(evt)) {
-      for (var i = 0; i < items.length; i++) {
-        items[i].classList.remove('pin--active');
+(function () {
+  window.initializePins = function () {
+    var containerPins = document.querySelector('.tokyo__pin-map');
+    var dialogOpenPins = document.querySelectorAll('.pin');
+
+    var openPopup = function (target) {
+      for (var i = 0; i < dialogOpenPins.length; i++) {
+        dialogOpenPins[i].classList.remove('pin--active');
       }
-      popup.classList.add('invisible');
-    }
+      target.classList.add('pin--active');
+      target.setAttribute('aria-pressed', 'true');
+    };
+
+    var onClickOpen = function (evt) {
+      var target = evt.target;
+      while (target !== window.containerPins) {
+        if (target.classList.contains('pin')) {
+          openPopup(target);
+          window.showCard();
+          return;
+        }
+        target = target.parentNode;
+      }
+    };
+    var onKeyDownOpen = function (evt) {
+      if (window.utils.isEnter(evt)) {
+        if (evt.target.classList.contains('pin')) {
+          openPopup(evt.target);
+          window.showCard(function () {
+            evt.target.focus();
+          });
+        }
+      }
+    };
+
+    containerPins.addEventListener('click', onClickOpen);
+    containerPins.addEventListener('keydown', onKeyDownOpen);
+
   };
-
-  var closePopup = function () {
-    for (var i = 0; i < items.length; i++) {
-      items[i].classList.remove('pin--active');
-      items[i].setAttribute('aria-pressed', 'false');
-    }
-    popup.classList.add('invisible');
-    document.removeEventListener('keydown', onPopupKeydown);
-    popup.setAttribute('aria-hidden', 'true');
-    popupCloseButton.removeEventListener('click', onClick);
-    popupCloseButton.removeEventListener('keydown', onKeyDown);
-
-    if (typeof callback === 'function') {
-      callback();
-    }
-
-  };
-
-  var onClick = function () {
-    closePopup();
-  };
-
-  var onKeyDown = function (evt) {
-    if (window.utils.isEnter(evt)) {
-      closePopup();
-    }
-  };
-
-  popupCloseButton.addEventListener('click', onClick);
-
-  popupCloseButton.addEventListener('keydown', function (evt) {
-    if (window.utils.isEnter(evt)) {
-      closePopup();
-    }
-  });
-
-};
+})();

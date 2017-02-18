@@ -1,48 +1,56 @@
 'use strict';
 
-window.showCard = function (popup, container, items) {
+var dialog = document.querySelector('.dialog');
+var dialogCloseButton = dialog.querySelector('.dialog__close');
+var dialogOpenPins = document.querySelectorAll('.pin');
 
-  var onPopupKeydown = function (evt) {
-    if (window.utils.isEscape(evt)) {
-      for (var i = 0; i < items.length; i++) {
-        items[i].classList.remove('pin--active');
+(function () {
+  window.showCard = function (callback) {
+
+    var onPopupKeydown = function (evt) {
+      if (window.utils.isEscape(evt)) {
+        for (var i = 0; i < dialogOpenPins.length; i++) {
+          dialogOpenPins[i].classList.remove('pin--active');
+        }
+        dialog.classList.add('invisible');
       }
-      popup.classList.add('invisible');
-    }
+    };
+
+    var openPopup = function () {
+      dialog.classList.remove('invisible');
+      document.addEventListener('keydown', onPopupKeydown);
+      dialog.setAttribute('aria-hidden', 'false');
+    };
+    openPopup();
+
+    var closePopup = function () {
+      for (var i = 0; i < dialogOpenPins.length; i++) {
+        dialogOpenPins[i].classList.remove('pin--active');
+        dialogOpenPins[i].setAttribute('aria-pressed', 'false');
+      }
+      dialog.classList.add('invisible');
+      document.removeEventListener('keydown', onPopupKeydown);
+      dialog.setAttribute('aria-hidden', 'true');
+      dialogCloseButton.removeEventListener('click', onClick);
+      dialogCloseButton.removeEventListener('keydown', onKeyDown);
+
+      if (typeof callback === 'function') {
+        callback();
+      }
+    };
+
+    var onClick = function () {
+      closePopup();
+    };
+
+    var onKeyDown = function (evt) {
+      if (window.utils.isEnter(evt)) {
+        closePopup();
+      }
+    };
+
+    dialogCloseButton.addEventListener('click', onClick);
+    dialogCloseButton.addEventListener('keydown', onKeyDown);
+
   };
-
-  var openPopup = function (target) {
-    for (var i = 0; i < items.length; i++) {
-      items[i].classList.remove('pin--active');
-    }
-    target.classList.add('pin--active');
-    popup.classList.remove('invisible');
-    document.addEventListener('keydown', onPopupKeydown);
-    target.setAttribute('aria-pressed', 'true');
-    popup.setAttribute('aria-hidden', 'false');
-  };
-
-  window.containerPins.addEventListener('click', function (evt) {
-    var target = evt.target;
-    while (target !== window.containerPins) {
-      if (target.classList.contains('pin')) {
-        openPopup(target);
-        window.initializePins(window.dialog, window.dialogCloseButton, window.containerPins, window.dialogOpenPins);
-        return;
-      }
-      target = target.parentNode;
-    }
-  });
-
-  window.containerPins.addEventListener('keydown', function (evt) {
-    if (window.utils.isEnter(evt)) {
-      if (evt.target.classList.contains('pin')) {
-        openPopup(evt.target);
-        window.initializePins(window.dialog, window.dialogCloseButton, window.containerPins, window.dialogOpenPins, function () {
-          evt.target.focus();
-        });
-      }
-    }
-  });
-
-};
+})();

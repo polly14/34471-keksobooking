@@ -1,10 +1,5 @@
 'use strict';
 
-window.dialog = document.querySelector('.dialog');
-window.dialogCloseButton = window.dialog.querySelector('.dialog__close');
-window.containerPins = document.querySelector('.tokyo__pin-map');
-window.dialogOpenPins = document.querySelectorAll('.pin');
-
 var formTitle = document.querySelector('#title');
 var formPrice = document.querySelector('#price');
 var formAdress = document.querySelector('#address');
@@ -29,11 +24,19 @@ formPrice.max = 1000000;
 formPrice.min = 1000;
 formAdress.required = true;
 
-window.showCard(window.dialog, window.containerPins, window.dialogOpenPins);
+var syncValues = function (element, value) {
+  element.value = value;
+};
+var syncValueWithMin = function (element, value) {
+  element.min = value;
+};
 
-window.synchronizeFields(arrive, depart, arriveValues, departValues, 'value', window.synchronize);
+window.synchronizeFields(arrive, depart, arriveValues, departValues, syncValues);
+window.synchronizeFields(depart, arrive, departValues, arriveValues, syncValues);
 
-window.synchronizeFields(apartType, formPrice, typeArray, priceArray, 'min', window.synchronize);
+window.synchronizeFields(roomNumber, capacity, roomNumberArray, capacityArray, syncValues);
+window.synchronizeFields(capacity, roomNumber, capacityArray, roomNumberArray, syncValues);
 
-window.synchronizeFields(roomNumber, capacity, roomNumberArray, capacityArray, 'value', window.synchronize);
+window.synchronizeFields(apartType, formPrice, typeArray, priceArray, syncValueWithMin);
 
+window.initializePins();

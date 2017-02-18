@@ -1,20 +1,12 @@
 'use strict';
 
-window.synchronizeFields = function (firstSelect, secondSelect, firstArray, secondArray, selectProperty, callback) {
+(function () {
+  window.synchronizeFields = function (firstSelect, secondSelect, firstArray, secondArray, callback) {
+    firstSelect.addEventListener('change', function () {
+      if (typeof callback === 'function') {
+        callback(secondSelect, secondArray[firstArray.indexOf(firstSelect.value)]);
+      }
+    });
+  };
+})();
 
-  if (typeof callback === 'function') {
-    callback(firstSelect, secondSelect, firstArray, secondArray, selectProperty);
-  }
-
-};
-
-window.synchronize = function (firstSelect, secondSelect, firstArray, secondArray, selectProperty) {
-
-  secondSelect.addEventListener('change', function () {
-    firstSelect.value = firstArray[secondArray.indexOf(secondSelect[selectProperty])];
-  });
-  firstSelect.addEventListener('change', function () {
-    secondSelect[selectProperty] = secondArray[firstArray.indexOf(firstSelect.value)];
-  });
-
-};
