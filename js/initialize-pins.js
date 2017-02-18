@@ -22,7 +22,7 @@ window.utils = (function () {
     var containerPins = document.querySelector('.tokyo__pin-map');
     var dialogOpenPins = document.querySelectorAll('.pin');
 
-    var openPopup = function (target) {
+    var activatePin = function (target) {
       for (var i = 0; i < dialogOpenPins.length; i++) {
         dialogOpenPins[i].classList.remove('pin--active');
       }
@@ -34,7 +34,7 @@ window.utils = (function () {
       var target = evt.target;
       while (target !== window.containerPins) {
         if (target.classList.contains('pin')) {
-          openPopup(target);
+          activatePin(target);
           window.showCard();
           return;
         }
@@ -44,7 +44,7 @@ window.utils = (function () {
     var onKeyDownOpen = function (evt) {
       if (window.utils.isEnter(evt)) {
         if (evt.target.classList.contains('pin')) {
-          openPopup(evt.target);
+          activatePin(evt.target);
           window.showCard(function () {
             evt.target.focus();
           });

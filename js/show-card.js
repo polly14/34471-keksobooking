@@ -1,10 +1,9 @@
 'use strict';
 
-var dialog = document.querySelector('.dialog');
-var dialogCloseButton = dialog.querySelector('.dialog__close');
-var dialogOpenPins = document.querySelectorAll('.pin');
-
 (function () {
+  var dialog = document.querySelector('.dialog');
+  var dialogCloseButton = dialog.querySelector('.dialog__close');
+  var dialogOpenPins = document.querySelectorAll('.pin');
   window.showCard = function (callback) {
 
     var onPopupKeydown = function (evt) {
