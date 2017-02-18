@@ -32,7 +32,7 @@ window.utils = (function () {
 
     var onClickOpen = function (evt) {
       var target = evt.target;
-      while (target !== window.containerPins) {
+      while (target !== containerPins) {
         if (target.classList.contains('pin')) {
           activatePin(target);
           window.showCard();
