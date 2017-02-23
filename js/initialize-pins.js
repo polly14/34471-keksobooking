@@ -21,6 +21,25 @@ window.utils = (function () {
   window.initializePins = function () {
     var containerPins = document.querySelector('.tokyo__pin-map');
     var dialogOpenPins = document.querySelectorAll('.pin');
+    var similarApartaments = [];
+
+    var loadApartaments = function () {
+      window.load('https://intensive-javascript-server-pedmyactpq.now.sh/keksobooking/data', function (data) {
+        similarApartaments = data;
+
+        var threeApartaments = [];
+        threeApartaments = similarApartaments.slice(0, 3);
+
+        var fragment = document.createDocumentFragment();
+        threeApartaments.forEach(function (it) {
+          fragment.appendChild(window.render(it));
+        });
+        containerPins.appendChild(fragment);
+
+      });
+    };
+
+    loadApartaments();
 
     var activatePin = function (target) {
       for (var i = 0; i < dialogOpenPins.length; i++) {
