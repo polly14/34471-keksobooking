@@ -7,22 +7,13 @@
   var dialogTitle = newDialog.querySelector('.dialog__title');
   var dialogClose = dialogTitle.querySelector('.dialog__close');
   dialogClose.setAttribute('role', 'button');
-
   var tokyo = document.querySelector('.tokyo');
-  var removeActivatePin = function () {
-    var pinActive = document.querySelector('.pin--active');
-    if (pinActive) {
-      pinActive.classList.remove('pin--active');
-      pinActive.setAttribute('aria-pressed', 'false');
-    }
-  };
 
-  window.showCard = function (data, callback) {
+  window.showCard = function (data, cbRemoveActivatePin, callback) {
 
     var onPopupKeydown = function (evt) {
       if (window.utils.isEscape(evt)) {
-        removeActivatePin();
-        newDialog.classList.add('invisible');
+        closePopup();
       }
     };
 
@@ -84,13 +75,15 @@
     openPopup(data);
 
     var closePopup = function () {
-      removeActivatePin();
       newDialog.classList.add('invisible');
       document.removeEventListener('keydown', onPopupKeydown);
       newDialog.setAttribute('aria-hidden', 'true');
       dialogClose.removeEventListener('click', onClick);
       dialogClose.removeEventListener('keydown', onKeyDown);
 
+      if (typeof cbRemoveActivatePin === 'function') {
+        cbRemoveActivatePin();
+      }
       if (typeof callback === 'function') {
         callback();
       }
