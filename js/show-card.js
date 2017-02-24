@@ -4,8 +4,8 @@
   var dialogTemplate = document.querySelector('#dialog-template');
   var dialogToClone = dialogTemplate.content.querySelector('.dialog');
   var newDialog = dialogToClone.cloneNode(true);
+  var dialogClose = newDialog.querySelector('dialog__close');
 
-  var dialogCloseButton = document.querySelector('.dialog__close');
   var tokyo = document.querySelector('.tokyo');
   var removeActivatePin = function () {
     var pinActive = document.querySelector('.pin--active');
@@ -86,8 +86,8 @@
       newDialog.classList.add('invisible');
       document.removeEventListener('keydown', onPopupKeydown);
       newDialog.setAttribute('aria-hidden', 'true');
-      dialogCloseButton.removeEventListener('click', onClick);
-      dialogCloseButton.removeEventListener('keydown', onKeyDown);
+      dialogClose.removeEventListener('click', onClick);
+      dialogClose.removeEventListener('keydown', onKeyDown);
 
       if (typeof callback === 'function') {
         callback();
@@ -106,8 +106,8 @@
 
     return function () {
       openPopup(data);
-      dialogCloseButton.addEventListener('click', onClick);
-      dialogCloseButton.addEventListener('keydown', onKeyDown);
+      dialogClose.addEventListener('click', onClick);
+      dialogClose.addEventListener('keydown', onKeyDown);
     };
 
   };
