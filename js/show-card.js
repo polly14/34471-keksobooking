@@ -1,10 +1,11 @@
 'use strict';
 
-(function () {
+/*(function () {*/
   var dialogTemplate = document.querySelector('#dialog-template');
   var dialogToClone = dialogTemplate.content.querySelector('.dialog');
   var newDialog = dialogToClone.cloneNode(true);
-  var dialogClose = newDialog.querySelector('dialog__close');
+  var dialogTitle = newDialog.querySelector('.dialog__title');
+  var dialogClose = dialogTitle.querySelector('.dialog__close');
 
   var tokyo = document.querySelector('.tokyo');
   var removeActivatePin = function () {
@@ -112,5 +113,5 @@
     };
 
   };
-})();
+/*})();*/
 
