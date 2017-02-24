@@ -1,6 +1,6 @@
 'use strict';
 
-/*(function () {*/
+(function () {
   var dialogTemplate = document.querySelector('#dialog-template');
   var dialogToClone = dialogTemplate.content.querySelector('.dialog');
   var newDialog = dialogToClone.cloneNode(true);
@@ -26,7 +26,6 @@
     };
 
     var openPopup = function () {
-      var dialogTitle = newDialog.querySelector('.dialog__title');
       var dialogAvatar = dialogTitle.querySelector('img');
       var lodgeTitle = newDialog.querySelector('.lodge__title');
       var lodgeAdress = newDialog.querySelector('.lodge__address');
@@ -113,5 +112,5 @@
     };
 
   };
-/*})();*/
+})();
 
