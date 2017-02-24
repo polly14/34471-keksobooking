@@ -1,26 +1,8 @@
 'use strict';
 
-window.utils = (function () {
-  var ENTER_KEY_CODE = 13;
-  var ESCAPE_KEY_CODE = 27;
-
-  var isEnter = function (evt) {
-    return evt.keyCode && evt.keyCode === ENTER_KEY_CODE;
-  };
-  var isEscape = function (evt) {
-    return evt.keyCode && evt.keyCode === ESCAPE_KEY_CODE;
-  };
-
-  return {
-    isEnter: isEnter,
-    isEscape: isEscape
-  };
-})();
-
 (function () {
   window.initializePins = function () {
     var containerPins = document.querySelector('.tokyo__pin-map');
-    var dialogOpenPins = document.querySelectorAll('.pin');
     var similarApartaments = [];
 
     var loadApartaments = function () {
@@ -32,29 +14,32 @@ window.utils = (function () {
 
         var fragment = document.createDocumentFragment();
         threeApartaments.forEach(function (it) {
-          fragment.appendChild(window.render(it));
+          fragment.appendChild(window.renderPin(it));
         });
         containerPins.appendChild(fragment);
-
       });
     };
-
     loadApartaments();
 
     var activatePin = function (target) {
-      for (var i = 0; i < dialogOpenPins.length; i++) {
-        dialogOpenPins[i].classList.remove('pin--active');
-      }
       target.classList.add('pin--active');
       target.setAttribute('aria-pressed', 'true');
+    };
+    var removeActivatePin = function () {
+      var pinActive = document.querySelector('.pin--active');
+      if (pinActive) {
+        pinActive.classList.remove('pin--active');
+        pinActive.setAttribute('aria-pressed', 'false');
+      }
     };
 
     var onClickOpen = function (evt) {
       var target = evt.target;
       while (target !== containerPins) {
         if (target.classList.contains('pin')) {
+          removeActivatePin();
           activatePin(target);
-          window.showCard();
+          window.showCard(target.data);
           return;
         }
         target = target.parentNode;
@@ -63,8 +48,9 @@ window.utils = (function () {
     var onKeyDownOpen = function (evt) {
       if (window.utils.isEnter(evt)) {
         if (evt.target.classList.contains('pin')) {
+          removeActivatePin();
           activatePin(evt.target);
-          window.showCard(function () {
+          window.showCard(evt.target.data, function () {
             evt.target.focus();
           });
         }
