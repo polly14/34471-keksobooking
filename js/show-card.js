@@ -69,6 +69,7 @@
       data.offer.photos.forEach(function (photo) {
         var image = new Image(52, 42);
         image.src = photo;
+        image.style = 'padding:1px;';
         lodgePhotos.appendChild(image);
       });
 
