@@ -6,6 +6,7 @@
   var newDialog = dialogToClone.cloneNode(true);
   var dialogTitle = newDialog.querySelector('.dialog__title');
   var dialogClose = dialogTitle.querySelector('.dialog__close');
+  dialogClose.setAttribute('role', 'button');
 
   var tokyo = document.querySelector('.tokyo');
   var removeActivatePin = function () {
@@ -105,11 +106,8 @@
       }
     };
 
-    return function () {
-      openPopup(data);
-      dialogClose.addEventListener('click', onClick);
-      dialogClose.addEventListener('keydown', onKeyDown);
-    };
+    dialogClose.addEventListener('click', onClick);
+    dialogClose.addEventListener('keydown', onKeyDown);
 
   };
 })();
