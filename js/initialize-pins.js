@@ -49,8 +49,9 @@ window.initializePins = (function () {
       if (evt.target.classList.contains('pin')) {
         removeActivatePin();
         activatePin(evt.target);
-        window.showCard(evt.target.data, removeActivatePin, function () {
+        window.showCard(evt.target.data, function () {
           evt.target.focus();
+          removeActivatePin();
         });
       }
     }

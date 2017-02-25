@@ -1,7 +1,6 @@
 'use strict';
 
 window.showCard = (function () {
-  var cbRemove = null;
   var cb = null;
   var dialogTemplate = document.querySelector('#dialog-template');
   var dialogToClone = dialogTemplate.content.querySelector('.dialog');
@@ -80,9 +79,6 @@ window.showCard = (function () {
     dialogClose.removeEventListener('click', onClick);
     dialogClose.removeEventListener('keydown', onKeyDown);
 
-    if (typeof cbRemove === 'function') {
-      cbRemove();
-    }
     if (typeof cb === 'function') {
       cb();
     }
@@ -98,12 +94,11 @@ window.showCard = (function () {
     }
   };
 
-  return function (data, cbRemoveActivatePin, callback) {
+  return function (data, callback) {
     openPopup(data);
     dialogClose.addEventListener('click', onClick);
     dialogClose.addEventListener('keydown', onKeyDown);
     cb = callback;
-    cbRemove = cbRemoveActivatePin;
   };
 
 })();
