@@ -12,7 +12,7 @@ window.showCard = (function () {
 
   var onPopupKeydown = function (evt) {
     if (window.utils.isEscape(evt)) {
-      closePopup();
+      window.closePopup();
     }
   };
 
@@ -72,7 +72,7 @@ window.showCard = (function () {
 
   };
 
-  var closePopup = function () {
+  window.closePopup = function () {
     newDialog.classList.add('invisible');
     document.removeEventListener('keydown', onPopupKeydown);
     newDialog.setAttribute('aria-hidden', 'true');
@@ -85,12 +85,12 @@ window.showCard = (function () {
   };
 
   var onClick = function () {
-    closePopup();
+    window.closePopup();
   };
 
   var onKeyDown = function (evt) {
     if (window.utils.isEnter(evt)) {
-      closePopup();
+      window.closePopup();
     }
   };
 
