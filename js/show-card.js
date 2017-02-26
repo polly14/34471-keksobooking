@@ -94,11 +94,14 @@ window.showCard = (function () {
     }
   };
 
-  return function (data, callback) {
-    openPopup(data);
-    dialogClose.addEventListener('click', onClick);
-    dialogClose.addEventListener('keydown', onKeyDown);
-    cb = callback;
+  return {
+    showCard: function (data, callback) {
+      openPopup(data);
+      dialogClose.addEventListener('click', onClick);
+      dialogClose.addEventListener('keydown', onKeyDown);
+      cb = callback;
+    },
+    closePopup: closePopup
   };
 
 })();
