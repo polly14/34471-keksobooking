@@ -6,9 +6,9 @@ window.showCard = (function () {
   var dialogToClone = dialogTemplate.content.querySelector('.dialog');
   var newDialog = dialogToClone.cloneNode(true);
   var dialogTitle = newDialog.querySelector('.dialog__title');
+  var tokyo = document.querySelector('.tokyo');
   var dialogClose = dialogTitle.querySelector('.dialog__close');
   dialogClose.setAttribute('role', 'button');
-  var tokyo = document.querySelector('.tokyo');
 
   var onPopupKeydown = function (evt) {
     if (window.utils.isEscape(evt)) {
@@ -27,18 +27,23 @@ window.showCard = (function () {
     var lodgeFeatures = newDialog.querySelector('.lodge__features');
     var lodgeDescription = newDialog.querySelector('.lodge__description');
     var lodgePhotos = newDialog.querySelector('.lodge__photos');
+
     var getType = function (typeValue) {
       var type;
       switch (typeValue) {
-        case 'flat': type = 'Квартира';
+        case 'flat':
+          type = 'Квартира';
           break;
-        case 'bungalo': type = 'Лачуга';
+        case 'bungalo':
+          type = 'Лачуга';
           break;
-        case 'house': type = 'Дворец';
+        case 'house':
+          type = 'Дворец';
           break;
       }
       return type;
     };
+
     dialogAvatar.src = data.author.avatar;
     lodgeTitle.innerText = data.offer.title;
     lodgeAdress.innerText = data.offer.address;
@@ -60,16 +65,13 @@ window.showCard = (function () {
     data.offer.photos.forEach(function (photo) {
       var image = new Image(52, 42);
       image.src = photo;
-      image.style = 'padding:1px;';
       lodgePhotos.appendChild(image);
     });
 
     newDialog.classList.remove('invisible');
     document.addEventListener('keydown', onPopupKeydown);
     newDialog.setAttribute('aria-hidden', 'false');
-
     tokyo.appendChild(newDialog);
-
   };
 
   var closePopup = function () {
@@ -78,7 +80,6 @@ window.showCard = (function () {
     newDialog.setAttribute('aria-hidden', 'true');
     dialogClose.removeEventListener('click', onClick);
     dialogClose.removeEventListener('keydown', onKeyDown);
-
     if (typeof cb === 'function') {
       cb();
     }
@@ -103,6 +104,4 @@ window.showCard = (function () {
     },
     closePopup: closePopup
   };
-
 })();
-
