@@ -109,10 +109,12 @@ window.initializePins = (function () {
     var target = evt.target;
     while (target !== containerPins) {
       if (target.classList.contains('pin')) {
-        removeActivatePin();
-        activatePin(target);
-        window.showCard.showCard(target.data, removeActivatePin);
-        return;
+        if (!target.classList.contains('pin__main')) {
+          removeActivatePin();
+          activatePin(target);
+          window.showCard.showCard(target.data, removeActivatePin);
+          return;
+        }
       }
       target = target.parentNode;
     }
@@ -120,12 +122,14 @@ window.initializePins = (function () {
   var onKeyDownOpen = function (evt) {
     if (window.utils.isEnter(evt)) {
       if (evt.target.classList.contains('pin')) {
-        removeActivatePin();
-        activatePin(evt.target);
-        window.showCard.showCard(evt.target.data, function () {
-          evt.target.focus();
+        if (!evt.target.classList.contains('pin__main')) {
           removeActivatePin();
-        });
+          activatePin(evt.target);
+          window.showCard.showCard(evt.target.data, function () {
+            evt.target.focus();
+            removeActivatePin();
+          });
+        }
       }
     }
   };
