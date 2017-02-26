@@ -9,26 +9,32 @@ window.initializePins = (function () {
   var filterRooms = tokyoFilters.querySelector('#housing_room-number');
   var filterGuests = tokyoFilters.querySelector('#housing_guests-number');
   var filterFeatures = tokyoFilters.querySelectorAll('input[type=checkbox]');
+  var ANY = 'any';
+  var MIDDLE = 'middle';
+  var LOW = 'low';
+  var HIGH = 'high';
+  var MIN_MIDDLE_PRICE = '10000';
+  var MAX_MIDDLE_PRICE = '50000';
 
   var rangeType = function (data) {
-    return (filterType.value === 'any') || (filterType.value === data.offer.type);
+    return (filterType.value === ANY) || (filterType.value === data.offer.type);
   };
   var rangePrice = function (item) {
     switch (filterPrice.value) {
-      case 'middle':
-        return item.offer.price >= 10000 && item.offer.price <= 50000;
-      case 'low':
-        return item.offer.price < 10000;
-      case 'hight':
-        return item.offer.price > 50000;
+      case MIDDLE:
+        return item.offer.price >= MIN_MIDDLE_PRICE && item.offer.price <= MAX_MIDDLE_PRICE;
+      case LOW:
+        return item.offer.price < MIN_MIDDLE_PRICE;
+      case HIGH:
+        return item.offer.price > MAX_MIDDLE_PRICE;
     }
     return false;
   };
   var rangeRooms = function (data) {
-    return (filterRooms.value === 'any') || (data.offer.rooms === +filterRooms.value);
+    return (filterRooms.value === ANY) || (data.offer.rooms === Number(filterRooms.value));
   };
   var rangeGuests = function (data) {
-    return (filterGuests.value === 'any') || (data.offer.guests === +filterGuests.value);
+    return (filterGuests.value === ANY) || (data.offer.guests === Number(filterGuests.value));
   };
   var rangeFeatures = function (data) {
     var getFeatureChecked = function (feature) {
@@ -53,7 +59,7 @@ window.initializePins = (function () {
   };
 
   var removePins = function () {
-    window.closePopup();
+    window.showCard.closePopup();
     var pins = containerPins.querySelectorAll('.pin');
     pins.forEach(function (item) {
       if (!item.classList.contains('pin__main')) {
@@ -105,7 +111,7 @@ window.initializePins = (function () {
       if (target.classList.contains('pin')) {
         removeActivatePin();
         activatePin(target);
-        window.showCard(target.data, removeActivatePin);
+        window.showCard.showCard(target.data, removeActivatePin);
         return;
       }
       target = target.parentNode;
@@ -116,7 +122,7 @@ window.initializePins = (function () {
       if (evt.target.classList.contains('pin')) {
         removeActivatePin();
         activatePin(evt.target);
-        window.showCard(evt.target.data, function () {
+        window.showCard.showCard(evt.target.data, function () {
           evt.target.focus();
           removeActivatePin();
         });

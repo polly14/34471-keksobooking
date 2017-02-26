@@ -12,7 +12,7 @@ window.showCard = (function () {
 
   var onPopupKeydown = function (evt) {
     if (window.utils.isEscape(evt)) {
-      window.closePopup();
+      closePopup();
     }
   };
 
@@ -72,7 +72,7 @@ window.showCard = (function () {
 
   };
 
-  window.closePopup = function () {
+  var closePopup = function () {
     newDialog.classList.add('invisible');
     document.removeEventListener('keydown', onPopupKeydown);
     newDialog.setAttribute('aria-hidden', 'true');
@@ -85,20 +85,23 @@ window.showCard = (function () {
   };
 
   var onClick = function () {
-    window.closePopup();
+    closePopup();
   };
 
   var onKeyDown = function (evt) {
     if (window.utils.isEnter(evt)) {
-      window.closePopup();
+      closePopup();
     }
   };
 
-  return function (data, callback) {
-    openPopup(data);
-    dialogClose.addEventListener('click', onClick);
-    dialogClose.addEventListener('keydown', onKeyDown);
-    cb = callback;
+  return {
+    showCard: function (data, callback) {
+      openPopup(data);
+      dialogClose.addEventListener('click', onClick);
+      dialogClose.addEventListener('keydown', onKeyDown);
+      cb = callback;
+    },
+    closePopup: closePopup
   };
 
 })();
