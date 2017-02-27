@@ -11,9 +11,6 @@ window.renderPin = (function () {
     newPin.style.top = data.location.y + 'px';
     newPin.style.left = data.location.x + 'px';
     newPin.data = data;
-
     return newPin;
   };
-
 })();
-
